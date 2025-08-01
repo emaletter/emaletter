@@ -10,6 +10,11 @@ docs:
 repl *ARGS:
     cabal repl {{ARGS}}
 
-# Run the dev server (ghcid + tailwind)
-run:
+# Run the Ema dev server (ghcid + tailwind)
+run-website:
     nix run .#ema-tailwind-run
+
+# Run the crawler (ghcid)
+run-crawler:
+    cd emaletter-crawler && \
+    ghcid --warnings -T Main.main

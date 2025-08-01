@@ -18,6 +18,26 @@
 
 [^tmpl]: Based on [ema-template](https://github.com/srid/ema-template) with structure inspired by [haskell-template](https://github.com/srid/haskell-template).
 
+## Development
+
+First, enter the Nix devShell ideally via [direnv](https://nixos.asia/en/direnv).
+
+We use `ghcid` for fast re-compile/ re-run loop.
+
+To run the Ema website:
+
+```sh
+# In Nix devShell
+just run-website
+```
+
+To run the crawler:
+
+```sh
+# In Nix devShell
+just run-crawler
+```
+
 ## Roadmap
 
 TBD
