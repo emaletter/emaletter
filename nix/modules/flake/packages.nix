@@ -34,7 +34,7 @@
 
       packages = {
         site = buildEmaSiteWithTailwind { baseUrl = "/"; };
-        site-github = buildEmaSiteWithTailwind { baseUrl = "/emaletter-website/"; };
+        site-github = buildEmaSiteWithTailwind { baseUrl = "/emaletter/"; };
       };
     };
 }
