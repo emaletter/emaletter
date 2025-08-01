@@ -1,5 +1,5 @@
 cabal-version: 2.4
-name:          ema-template
+name:          emaletter-website
 version:       0.1.0.0
 license:       AGPL-3.0-only
 copyright:     2022 Sridhar Ratnakumar
@@ -21,7 +21,7 @@ data-files:
   *.css
   *.svg
 
-executable ema-template
+executable emaletter-website
   build-depends:
     , aeson
     , async

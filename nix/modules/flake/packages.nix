@@ -12,7 +12,7 @@
           ''
             mkdir -p $out
             pushd ${inputs.self}
-            ${lib.getExe config.packages.ema-template} \
+            ${lib.getExe config.packages.emaletter-website} \
               --base-url=${baseUrl} gen $out
             ${lib.getExe tailwind} \
               -o $out/tailwind.css 'src/**/*.hs'
@@ -23,7 +23,7 @@
         cli.environment.PC_DISABLE_TUI = true;
         settings = {
           processes = {
-            haskell.command = "cd ./ema-template && ghcid";
+            haskell.command = "cd ./emaletter-website && ghcid";
             tailwind = {
               command = "${lib.getExe tailwind} -w -o ./static/tailwind.css './src/**/*.hs'";
               is_tty = true;
@@ -34,7 +34,7 @@
 
       packages = {
         site = buildEmaSiteWithTailwind { baseUrl = "/"; };
-        site-github = buildEmaSiteWithTailwind { baseUrl = "/ema-template/"; };
+        site-github = buildEmaSiteWithTailwind { baseUrl = "/emaletter-website/"; };
       };
     };
 }

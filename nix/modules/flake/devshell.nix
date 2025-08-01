@@ -5,8 +5,8 @@
     in
     {
       devShells.default = pkgs.mkShell {
-        name = "ema-template";
-        meta.description = "ema-template development environment";
+        name = "emaletter-website";
+        meta.description = "emaletter-website development environment";
         packages = [
           tailwind
           pkgs.just

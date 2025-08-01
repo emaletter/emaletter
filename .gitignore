@@ -3,4 +3,5 @@ result
 result-*
 
 # Ignore automatically generated direnv output
-.direnv
+/.direnv
+/.pre-commit-config.yaml

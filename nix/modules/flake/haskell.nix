@@ -11,7 +11,7 @@
       projectRoot = builtins.toString (lib.fileset.toSource {
         root = root;
         fileset = lib.fileset.unions [
-          (root + /ema-template)
+          (root + /emaletter-website)
           (root + /cabal.project)
           (root + /LICENSE)
         ];
@@ -19,6 +19,6 @@
       autoWire = [ "packages" "apps" "checks" ];
     };
 
-    packages.default = config.packages.ema-template;
+    packages.default = config.packages.emaletter-website;
   };
 }
