@@ -11,7 +11,7 @@
           { }
           ''
             mkdir -p $out
-            pushd ${inputs.self}
+            pushd ${inputs.self}/emaletter-website
             ${lib.getExe config.packages.emaletter-website} \
               --base-url=${baseUrl} gen $out
             ${lib.getExe tailwind} \
@@ -25,7 +25,7 @@
           processes = {
             haskell.command = "cd ./emaletter-website && ghcid";
             tailwind = {
-              command = "${lib.getExe tailwind} -w -o ./static/tailwind.css './src/**/*.hs'";
+              command = "cd ./emaletter-website && ${lib.getExe tailwind} -w -o ./static/tailwind.css './src/**/*.hs'";
               is_tty = true;
             };
           };
