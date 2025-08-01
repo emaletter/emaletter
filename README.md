@@ -5,6 +5,9 @@
 
 ## Repo structure
 
+> [!TIP]
+> **Relude**: Please familiarize yourself with [Relude](https://hackage.haskell.org/package/relude), our favoured Haskell prelude, whilst working on the Haskell codebase.
+
 - Haskell
     - `./emaletter-website`: [Ema](https://ema.srid.ca/) static site generator[^tmpl]
     - `./emaletter-crawler`: [Flat Data](https://githubnext.com/projects/flat-data/) style crawler for updating data (used by `emaletter-website`)

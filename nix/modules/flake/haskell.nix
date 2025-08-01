@@ -12,6 +12,7 @@
         root = root;
         fileset = lib.fileset.unions [
           (root + /emaletter-website)
+          (root + /emaletter-crawler)
           (root + /cabal.project)
           (root + /LICENSE)
         ];
