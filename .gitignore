@@ -5,3 +5,5 @@ result-*
 # Ignore automatically generated direnv output
 /.direnv
 /.pre-commit-config.yaml
+
+/dist-newstyle
