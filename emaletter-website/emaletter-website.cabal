@@ -105,6 +105,7 @@ executable emaletter-website
     EmaLetter.Website.Routes
     EmaLetter.Website.Site
     EmaLetter.Website.Types
+    EmaLetter.Website.Widgets
 
   hs-source-dirs:     src
   default-language:   Haskell2010
