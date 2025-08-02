@@ -45,3 +45,7 @@ TBD
 ## License
 
 AGPL 
+
+## Community
+
+- [Discord](https://discord.gg/y9mb7uwD7W)
