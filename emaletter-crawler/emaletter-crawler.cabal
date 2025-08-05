@@ -24,6 +24,7 @@ library
     , bytestring
     , containers
     , data-default
+    , deepseq
     , directory
     , filepath
     , relude                >=1.0
@@ -97,6 +98,7 @@ executable emaletter-crawler
     , base                  >=4   && <5
     , containers
     , data-default
+    , deepseq
     , directory
     , emaletter-crawler
     , filepath

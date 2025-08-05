@@ -2,7 +2,8 @@ module HackerNews where
 
 import Autodocodec (HasCodec (..), object, optionalField, parseJSONViaCodec, requiredField, toJSONViaCodec, (.=))
 import Control.Concurrent (threadDelay)
-import Control.Exception (try)
+import Control.DeepSeq (NFData)
+import Control.Exception (evaluate, try)
 import Data.Aeson (FromJSON (..), ToJSON (..), decode, encode)
 import Data.Vector (Vector)
 import Data.Vector qualified as V
@@ -25,6 +26,7 @@ data StoryDetails = StoryDetails
   , storyUrl :: !(Maybe Text)
   }
   deriving stock (Show, Eq, Generic)
+  deriving anyclass (NFData)
 
 instance HasCodec StoryDetails where
   codec =
@@ -126,7 +128,9 @@ loadStoryDetails = do
   exists <- liftIO $ doesFileExist storyDetailsFilePath
   if not exists
     then pure mempty
-    else liftIO $ maybeToMonoid . decode <$> readFileLBS storyDetailsFilePath
+    else do
+      content <- liftIO $ readFileLBS storyDetailsFilePath
+      liftIO $ evaluateNF (maybeToMonoid $ decode content)
 
 -- | Save story details to disk, adding new details to existing ones
 saveStoryDetails :: (MonadIO m) => Vector StoryDetails -> m ()
