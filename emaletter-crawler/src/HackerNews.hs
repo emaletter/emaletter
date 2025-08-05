@@ -2,8 +2,7 @@ module HackerNews where
 
 import Autodocodec (HasCodec (..), object, optionalField, parseJSONViaCodec, requiredField, toJSONViaCodec, (.=))
 import Control.Concurrent (threadDelay)
-import Control.DeepSeq (NFData)
-import Control.Exception (evaluate, try)
+import Control.Exception (try)
 import Data.Aeson (FromJSON (..), ToJSON (..), decode, encode)
 import Data.Vector (Vector)
 import Data.Vector qualified as V
