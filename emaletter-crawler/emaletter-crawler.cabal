@@ -20,7 +20,9 @@ executable emaletter-crawler
   build-depends:
     , aeson
     , async
+    , autodocodec
     , base                  >=4   && <5
+    , bytestring
     , containers
     , data-default
     , directory
@@ -28,9 +30,12 @@ executable emaletter-crawler
     , monad-logger
     , optparse-applicative
     , relude                >=1.0
+    , req
     , text
     , time
     , unliftio
+    , unordered-containers
+    , vector
 
   mixins:
     base hiding (Prelude),
@@ -85,5 +90,6 @@ executable emaletter-crawler
     ViewPatterns
 
   main-is:            Main.hs
+  other-modules:      HackerNews
   hs-source-dirs:     src
   default-language:   Haskell2010
