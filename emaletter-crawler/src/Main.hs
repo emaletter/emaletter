@@ -2,16 +2,23 @@ module Main where
 
 import Data.Set qualified as Set
 import Data.Vector qualified as V
+import EmaLetter.Crawler.CLI (Command (..), parseArgs, runCommand)
 import HackerNews qualified as HN
 import Relude.Extra.Bifunctor (firstF)
 
 main :: IO ()
 main = do
-  putTextLn "Fetching Hacker News data..."
-  result <- runExceptT processStories
-  case result of
-    Left err -> putTextLn $ "Failed to fetch Hacker News data: " <> show err
-    Right () -> pass
+  command <- parseArgs
+  case command of
+    -- For now, crawl command uses the original logic
+    CrawlCommand _opts -> do
+      putTextLn "Fetching Hacker News data..."
+      result <- runExceptT processStories
+      case result of
+        Left err -> putTextLn $ "Failed to fetch Hacker News data: " <> show err
+        Right () -> pass
+    -- Other commands use stub implementations
+    _ -> runCommand command
 
 processStories :: (MonadIO m) => ExceptT String m ()
 processStories = do
