@@ -68,8 +68,8 @@ newStoriesReq =
 
 -- | Generate API URL for fetching details of a specific story
 storyDetailsUrl :: StoryId -> Req.Url Req.Https
-storyDetailsUrl storyId =
-  Req.https "hacker-news.firebaseio.com" Req./: "v0" Req./: "item" Req./: show storyId <> ".json"
+storyDetailsUrl storyId' =
+  Req.https "hacker-news.firebaseio.com" Req./: "v0" Req./: "item" Req./: show storyId' <> ".json"
 
 -- | Local file path for storing story details
 storyDetailsFilePath :: FilePath
@@ -77,10 +77,10 @@ storyDetailsFilePath = "feeds/hackernews.storydetails.json"
 
 -- | HTTP request configuration for fetching story details by ID
 storyDetailsReq :: StoryId -> Req.Req (Req.JsonResponse StoryDetails)
-storyDetailsReq storyId =
+storyDetailsReq storyId' =
   Req.req
     Req.GET
-    (storyDetailsUrl storyId)
+    (storyDetailsUrl storyId')
     Req.NoReqBody
     Req.jsonResponse
     mempty
@@ -102,8 +102,8 @@ saveNewestStories storyIds = do
 
 -- | Fetch detailed information for a specific story ID
 fetchStoryDetails :: (MonadIO m) => StoryId -> m (Either CrawlerError StoryDetails)
-fetchStoryDetails storyId =
-  liftIO $ bimapF ReqError Req.responseBody (tryRunReq (storyDetailsReq storyId))
+fetchStoryDetails storyId' =
+  liftIO $ bimapF ReqError Req.responseBody (tryRunReq (storyDetailsReq storyId'))
 
 -- | Fetch story details for multiple IDs with rate limiting (1 second between requests)
 fetchAllStoryDetails :: (MonadIO m) => Vector StoryId -> m (Vector StoryDetails)
@@ -112,25 +112,21 @@ fetchAllStoryDetails storyIds = do
   pure $ V.mapMaybe rightToMaybe results
   where
     fetchWithDelay :: Int -> StoryId -> IO (Either CrawlerError StoryDetails)
-    fetchWithDelay idx storyId = do
+    fetchWithDelay idx storyId' = do
       when (idx > 0) $ threadDelay 1_000_000 -- 1 second delay
-      result <- bimapF ReqError Req.responseBody (tryRunReq (storyDetailsReq storyId))
+      result <- bimapF ReqError Req.responseBody (tryRunReq (storyDetailsReq storyId'))
       case result of
         Right details -> putTextLn $ "Fetched: " <> storyTitle details
-        Left err -> putTextLn $ "Failed to fetch story " <> show storyId <> ": " <> show err
+        Left err -> putTextLn $ "Failed to fetch story " <> show storyId' <> ": " <> show err
       pure result
 
 -- | Load existing story details from disk
 loadStoryDetails :: (MonadIO m) => m (Vector StoryDetails)
 loadStoryDetails = do
   exists <- liftIO $ doesFileExist storyDetailsFilePath
-  if exists
-    then do
-      content <- liftIO $ readFileLBS storyDetailsFilePath
-      case decode content of
-        Just details -> pure details
-        Nothing -> pure mempty
-    else pure mempty
+  if not exists
+    then pure mempty
+    else liftIO $ maybeToMonoid . decode <$> readFileLBS storyDetailsFilePath
 
 -- | Save story details to disk, adding new details to existing ones
 saveStoryDetails :: (MonadIO m) => Vector StoryDetails -> m ()
