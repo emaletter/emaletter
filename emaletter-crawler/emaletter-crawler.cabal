@@ -16,10 +16,9 @@ category:      Web
 -- A URL where users can report bugs.
 -- bug-reports:
 
-executable emaletter-crawler
+library
   build-depends:
     , aeson
-    , async
     , autodocodec
     , base                  >=4   && <5
     , bytestring
@@ -27,8 +26,80 @@ executable emaletter-crawler
     , data-default
     , directory
     , filepath
-    , monad-logger
-    , optparse-applicative
+    , relude                >=1.0
+    , req
+    , text
+    , time
+    , unliftio
+    , unordered-containers
+    , vector
+
+  mixins:
+    base hiding (Prelude),
+    relude (Relude as Prelude, Relude.Container.One),
+    relude
+
+  ghc-options:
+    -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns
+    -Wmissing-deriving-strategies -Wunused-foralls -Wunused-foralls
+    -fprint-explicit-foralls -fprint-explicit-kinds
+
+  default-extensions:
+    BangPatterns
+    ConstraintKinds
+    DataKinds
+    DeriveAnyClass
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    EmptyCase
+    EmptyDataDecls
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    ImportQualifiedPost
+    KindSignatures
+    LambdaCase
+    MultiParamTypeClasses
+    MultiWayIf
+    NoStarIsType
+    NumericUnderscores
+    OverloadedStrings
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeOperators
+    ViewPatterns
+
+  exposed-modules:    HackerNews
+  hs-source-dirs:     src
+  default-language:   Haskell2010
+
+executable emaletter-crawler
+  build-depends:
+    , aeson
+    , autodocodec
+    , base                  >=4   && <5
+    , containers
+    , data-default
+    , directory
+    , emaletter-crawler
+    , filepath
     , relude                >=1.0
     , req
     , text
@@ -92,4 +163,86 @@ executable emaletter-crawler
   main-is:            Main.hs
   other-modules:      HackerNews
   hs-source-dirs:     src
+  default-language:   Haskell2010
+
+test-suite tests
+  type:               exitcode-stdio-1.0
+  build-depends:
+    , aeson
+    , autodocodec
+    , base               >=4   && <5
+    , bytestring
+    , containers
+    , directory
+    , emaletter-crawler
+    , filepath
+    , hedgehog
+    , hspec
+    , relude             >=1.0
+    , tasty
+    , tasty-discover
+    , tasty-hedgehog
+    , tasty-hspec
+    , temporary
+    , text
+    , vector
+
+  mixins:
+    base hiding (Prelude),
+    relude (Relude as Prelude, Relude.Container.One),
+    relude
+
+  ghc-options:
+    -Wall -Wincomplete-record-updates -Wincomplete-uni-patterns
+    -Wmissing-deriving-strategies -Wunused-foralls -Wunused-foralls
+    -fprint-explicit-foralls -fprint-explicit-kinds -threaded
+
+  default-extensions:
+    BangPatterns
+    ConstraintKinds
+    DataKinds
+    DeriveAnyClass
+    DeriveDataTypeable
+    DeriveFoldable
+    DeriveFunctor
+    DeriveGeneric
+    DeriveLift
+    DeriveTraversable
+    DerivingStrategies
+    DerivingVia
+    EmptyCase
+    EmptyDataDecls
+    EmptyDataDeriving
+    ExistentialQuantification
+    ExplicitForAll
+    FlexibleContexts
+    FlexibleInstances
+    GADTSyntax
+    GeneralisedNewtypeDeriving
+    ImportQualifiedPost
+    KindSignatures
+    LambdaCase
+    MultiParamTypeClasses
+    MultiWayIf
+    NoStarIsType
+    NumericUnderscores
+    OverloadedStrings
+    PolyKinds
+    PostfixOperators
+    RankNTypes
+    ScopedTypeVariables
+    StandaloneDeriving
+    StandaloneKindSignatures
+    TupleSections
+    TypeApplications
+    TypeFamilies
+    TypeOperators
+    ViewPatterns
+
+  main-is:            Main.hs
+  other-modules:
+    HackerNewsProperties
+    HackerNewsSpec
+
+  hs-source-dirs:     test
   default-language:   Haskell2010
