@@ -1,9 +1,9 @@
 module Main where
 
-import Control.Monad.Trans.Except (ExceptT, runExceptT)
 import Data.Set qualified as Set
 import Data.Vector qualified as V
 import HackerNews qualified as HN
+import Relude.Extra.Bifunctor (firstF)
 
 main :: IO ()
 main = do
@@ -15,7 +15,7 @@ main = do
 
 processStories :: (MonadIO m) => ExceptT String m ()
 processStories = do
-  storyIds <- ExceptT HN.fetchNewestStories
+  storyIds <- ExceptT $ firstF show HN.fetchNewestStories
   liftIO $ putTextLn "Saving newest story IDs..."
   liftIO $ HN.saveNewestStories storyIds
 
